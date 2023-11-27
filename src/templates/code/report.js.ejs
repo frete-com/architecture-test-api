@@ -1,0 +1,33 @@
+import mocha from 'mocha'
+import { allure } from 'allure-mocha/runtime.js'
+import addContext from 'mochawesome/addContext.js'
+
+export async function report(context, response) {
+  const formatReport = (data) => JSON.stringify(data, undefined, 2)
+
+  if (mocha.reporters['allure-mocha']) {
+    allure.logStep(`Request URL: ${response.request.url}`)
+    allure.logStep(`Request Method: ${response.request.method}`)
+    allure.logStep(`Request Header: ${formatReport(response.request._header)}`)
+    allure.logStep(`Response Status: ${formatReport(response.status)}`)
+    allure.logStep(`Response Headers: ${formatReport(response.headers)}`)
+    allure.logStep(`Response Body: ${formatReport(response.body)}`)
+  } else {
+    addContext(
+      context,
+      `
+      Request: ${formatReport(response.request)} \n
+      Response Status Code: ${formatReport(response.status)} \n
+      Response Body: ${formatReport(response.body)} \n
+      Response Headers: ${formatReport(response.header)} \n
+      `,
+    )
+  }
+}
+
+export async function allureDetails({ suite, author }) {
+  if (mocha.reporters['allure-mocha']) {
+    allure.suite(suite)
+    allure.label('Author', author)
+  }
+}

@@ -1,0 +1,31 @@
+import { createConnection } from 'mysql2'
+import { env } from '../../env/config-environment.js'
+
+export function executeQuery(query) {
+  const connection = createConnection({
+    host: env.HOST_MYSQL,
+    port: env.PORT_MYSQL,
+    user: env.USER_MYSQL,
+    password: env.PASSWORD_MYSQL,
+    connectionLimit: 1
+  })
+
+  try {
+    connection.connect()
+  } catch (error) {
+    console.error('Error connecting to MySQL database', error)
+  }
+
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) {
+        reject(error)
+        return
+      }
+
+      resolve(results)
+    })
+
+    connection.end()
+  })
+}

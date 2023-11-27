@@ -1,0 +1,103 @@
+# Automação "<%= props.name %>"
+
+## Tecnologias
+
+- **allure-mocha**: Integração com a ferramenta de gerenciamento de casos de testes [Allura TestOps](https://qameta.io/).
+- **chai**: Asserção de testes em formato de BDD / TDD.
+- **dotenv**: Gerenciamento de variáveis de ambiente.
+- **faker-js/:faker**: Geração de dados fake ("falsos" mas em padrões válidos).
+- **joi**: Validação de schema de dados.
+- **mocha**: Estrutura para escrita de testes (ex.: describe, it) e runner da automação.
+- **mongodb**: Conexão e execução de operações em bancos não-relacionais MongoDB.
+- **mysql2**: Conexão e execução de operações em bancos relacionais MySQL.
+- **supertest**: Abstração de alto nível para realizar testes HTTP.
+- **eslint**: Verificador de padrões de escrita da linguagem JavaScript.
+- **prettier**: Formatador de código opinativo
+- **mochawesome**: Gerador de relatórios para automações em estruturas Mocha.
+
+
+## Arquitetura
+
+- 📂  **nome-serviço-api-test/**:
+  - 📂 **core/:** Contém o centro da automação de testes de API, ou seja, as rotas que serão testadas e os testes em si.
+    - 📂 **routes/:** Contém as estruturas para chamada das rotas a serem testadas.
+    - 📂 **tests/:** Contém as suítes/:cenários de testes por rotas.
+  - 📂 **support/:** Contém o apoio necessário e complementar para execução de um teste, como massa de dados, funções de suporte para preparação do ambiente de teste, geração de relatórios...
+    - 📂 **data/:** Contém os requests e responses bodies a serem utilizados na chamada da API e validação do retorno dos testes.
+      - 📂 **request/:** Contém as estruturas de requests bodies.
+      - 📂 **response/:** Contém as estruturas de responses bodies.
+        - 📂 **schema/:** Contém os schemas dos responses bodies com retornos de dados dinâmicos.
+      - 📂 **database/:** Contém as estruturas de conexão, operações e queries de banco de dados
+        - 📂 **mongodb/:** [SOMENTE EM PROJETOS QUE FAZEM CONEXÃO COM O MONGODB]
+          - 📄 **connection.js:** Funções referentes a abertura e fechamento de conexão com banco de dados não relacional MongoDB.
+          - 📄 **operations.js:** Funções com operações de documentos MongoDB.
+          - 📄 **queries.js:** Função com construção de queries do MongoDB.
+        - 📂 **mysql/:** [SOMENTE EM PROJETOS QUE FAZEM CONEXÃO COM O MYSQL]
+          - 📄 **connection.js:** Funções referentes a abertura e fechamento de conexão com banco de dados relacional MySQL.
+          - 📄 **queries.js:** Função com construção de queries do MySQL.
+      - 📂 **env/:** Contém estruturas referentes ao gerenciamento de variáveis de ambiente da aplicação.
+        - 📄 **config-environment.js:** Funções referentes a validação e definição de uso de envs.
+      - 📂 **helpers/:** Contém pré e pós condições das estrutura de execução dos testes.
+        - 📄 **allure-authors.js:** Lista de nome de QAs passíveis a serem autores de um conjunto de testes.
+        - 📄 **commons.js:** Ações de negócio em comum a serem realizada antes/:pós a execução de mais de um teste.
+        - 📄 **config.js:** Estruturas de dados a serem utilizadas como configurações fixas nos testes.
+        - 📄 **report.js:** Ações atreladas a geração de report de execução de teste.
+        - 📄 **utils:** Possui funções utilitárias que auxiliam na construção e execução dos testes.
+  - 📄 **.env:** Contém as variáveis de ambiente.
+  - 📄 **.env.example:** Contém o modelo de declaração das variáveis de ambiente.
+  - 📄 **.eslintignore:** Contém a definição de pastas e arquivos que devem ter a verificação do eslint ignorada.
+  - 📄 **.eslintrc:** Contém as definições de configuração do eslint.
+  - 📄 **.gitignore:** Contém a definição de pastas e arquivos que não devem subir para o repositório do projeto no gitlab.
+  - 📄 **.gitlab-ci.yml:** Contém as definições e configurações da pipeline CI/:CD do gitlab.
+  - 📄 **.mocharc.json:** Contém as definições de configuração do mocha.
+  - 📄 **.npmrc:** Contém as definições de configuração do npm.
+  - 📄 **.README.md:** Contém a apresentação e informações sobre o projeto.
+  - 📄 **.package.json:** Contém as definições do projeto de automação.
+  - 📄 **.prettier.config.cjs:** Contém as definições de configuração do prettier.
+
+## Instalação
+
+### Pré-requisitos
+
+- **Node** (>= 18)
+- **NPM**
+
+### Instalar dependências
+
+Com o terminal aberto no diretório do projeto execute o comando:
+
+```bash
+npm i
+```
+
+### Execução 
+
+#### Executando os testes
+
+Com o terminal aberto no diretório do projeto execute o comando:
+
+```bash
+npm run test
+```
+
+**OBS:** O mochawesome-report gerará um HTML na pasta `mochawesome-report`
+
+#### Executando o lint
+
+Com o terminal aberto no diretório do projeto execute o comando:
+
+```bash
+npm run lint
+```
+
+**OBS:** As correções automáticas do eslint serão realizadas após a execução do comando.
+
+#### Executando o code style
+
+Com o terminal aberto no diretório do projeto execute o comando:
+
+```bash
+npm run code-style
+```
+
+**OBS:** As correções automáticas do prettier serão realizadas após a execução do comando.

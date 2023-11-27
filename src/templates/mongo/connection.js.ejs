@@ -1,0 +1,14 @@
+import { MongoClient } from 'mongodb'
+import { env } from '../../env/config-environment.js'
+
+export async function createConnection(collection) {
+  const client = new MongoClient(env.URI_MONGO, { useNewUrlParser: true })
+
+  try {
+    await client.connect()
+    return client.db(env.DATABASE_MONGO)
+  } catch (error) {
+    console.error('Error connecting to MongoDB database', error)
+    process.exit(1)
+  }
+}

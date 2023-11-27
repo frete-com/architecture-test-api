@@ -1,0 +1,102 @@
+import { createConnection } from './connection.js'
+
+export async function findOneDocument(collectionName, query = {}) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const document = await collection.findOne(query)
+
+    if (document) {
+      return document
+    } else {
+      throw new Error('Nenhum documento encontrado com a consulta especificada.')
+    }
+  } catch (error) {
+    console.error('Erro ao realizar consulta no MongoDB: ', error)
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function findDocuments(collectionName, query = {}) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const document = collection.find(query)
+
+    if (document) {
+      return document
+    } else {
+      throw new Error('Nenhum documento encontrado com a consulta especificada.')
+    }
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function findRandomicDocument(collectionName, size = 1) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const document = collection.aggregate([{ $sample: { size } }])
+
+    if (document) {
+      return document
+    } else {
+      throw new Error('Nenhum documento encontrado com a consulta especificada.')
+    }
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function insertOneDocument(collectionName, document) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const result = await collection.insertOne(document)
+    console.log(`Document ${result.insertedId} insert`)
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function updateOneDocument(collectionName, filter, update) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const result = await collection.updateOne(filter, update)
+    console.log(`Document ${result.upsertedId} update`)
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function deleteOneDocument(collectionName, filter) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const result = await collection.deleteOne(filter)
+    console.log(`${result.deletedCount} document delete`)
+  } finally {
+    database.client.close()
+  }
+}
+
+export async function deleteManyDocuments(collectionName, filter) {
+  const database = await createConnection()
+  const collection = database.collection(collectionName)
+
+  try {
+    const result = await collection.deleteMany(filter)
+    console.log(`${result.deletedCount} documents delete`)
+  } finally {
+    database.client.close()
+  }
+}

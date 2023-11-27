@@ -1,0 +1,66 @@
+image: public.ecr.aws/m8n7w3l2/fretehub:node-18.12-alpine
+
+variables:
+# Integração Slack
+  WEBHOOK: "<%= props.webhookSlack %>"
+  SLACK_CHANNEL: "<%= props.channelSlack %>"
+
+stages:
+- lint
+- code-style
+- test
+- test-report
+
+before_script:
+  - npm i
+
+lint:
+  allow_failure: false
+  stage: lint
+  script:
+    - npm run lint
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+code-style:
+  allow_failure: false
+  stage: code-style
+  script:
+    - npm run code-style
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+test:
+  timeout: 1h
+  allow_failure: false
+  stage: test
+  script:
+    - npm run test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+tests_passed:
+  stage: test-report
+  only:
+    - master
+    - main
+  when: on_success
+  script:
+    - apk add curl
+    - curl --location --request POST $WEBHOOK -H "Content-type:application/json" --data-raw "{ \"text\":\"*$CI_PROJECT_NAME - Result Automation Test* \n\n Success:check::check:\n Trigged by <@${GITLAB_USER_LOGIN}> - Branch $CI_COMMIT_BRANCH \n <$CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID|Console Log>, \"channel\":\"$SLACK_CHANNEL\"}"
+
+tests_failed:
+  stage: test-report
+  only:
+    - master
+    - main
+  when: on_failure
+  script:
+    - apk add curl
+    - curl --location --request POST $WEBHOOK -H "Content-type:application/json" --data-raw "{ \"text\":\"*$CI_PROJECT_NAME - Result Automation Test* \n\n Failed:x::x::blob-help:\n Trigged by <@${GITLAB_USER_LOGIN}> - Branch $CI_COMMIT_BRANCH \n <$CI_PROJECT_URL/pipelines/$CI_PIPELINE_ID|Console Log>, \"channel\":\"$SLACK_CHANNEL\"}"
