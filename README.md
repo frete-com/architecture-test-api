@@ -66,7 +66,7 @@ Proposta de estrutura, padronização e configuração arquitetural para desenvo
 ### Instalar
 
 ```bash
-npm i -g @fretecom/architecture-test-api
+npm i -g @frete.com/architecture-test-api
 ```
 
 ## Comandos
