@@ -21,7 +21,7 @@ module.exports = (toolbox) => {
     }
 
     await template.generate({
-      template: 'code/config-environment.ejs',
+      template: 'code/config-environment.js.ejs',
       target: 'support/env/config-environment.js',
     })
 
