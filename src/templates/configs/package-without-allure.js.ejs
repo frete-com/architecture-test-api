@@ -3,16 +3,12 @@
   "type": "module",
   "scripts": {
     "test": "mocha --reporter mochawesome",
-    "test-allure-testops": "mocha --reporter allure-mocha",
     "lint": "eslint support/ core/ --fix --ext .js",
-    "lint-pipeline": "eslint support/ core/ --ext .js",
-    "code-style": "prettier --check 'core/**/*.js' 'support/**/*.js' --write",
-    "code-style-pipeline": "prettier --check 'core/**/*.js' 'support/**/*.js'"
+    "code-style": "prettier --check 'core/**/*.js' 'support/**/*.js' --write"
   },
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "8.4.1",
-    "allure-mocha": "2.15.0",
     "chai": "5.1.0",
     "dotenv": "16.4.5",
     "faker-br": "0.4.1",

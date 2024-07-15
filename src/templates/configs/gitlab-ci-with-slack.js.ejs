@@ -1,9 +1,8 @@
-image: public.ecr.aws/m8n7w3l2/fretehub:node-18.12-alpine
+image: public.ecr.aws/m8n7w3l2/fretehub:node-20.9.0-alpine3.18
 
 variables:
-# Integração Slack
-  WEBHOOK: "<%= props.webhookSlack %>"
-  SLACK_CHANNEL: "<%= props.channelSlack %>"
+  WEBHOOK: "<%= props.urlWebhookSlack %>"
+  SLACK_CHANNEL: "<%= props.channelNameSlack %>"
 
 stages:
 - lint
@@ -18,7 +17,7 @@ lint:
   allow_failure: false
   stage: lint
   script:
-    - npm run lint
+    - npm run lint-pipeline
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
       when: never
@@ -28,7 +27,7 @@ code-style:
   allow_failure: false
   stage: code-style
   script:
-    - npm run code-style
+    - npm run code-style-pipeline
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
       when: never

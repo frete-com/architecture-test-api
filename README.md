@@ -2,22 +2,24 @@
 
 Proposta de estrutura, padronização e configuração arquitetural para desenvolvimento de projetos de testes automatizados de API.
 
-## Tecnologias
+## Detalhamento da arquitetura
 
-- **allure-mocha** *(2.8.1)*: Integração com a ferramenta de gerenciamento de casos de testes [Allura TestOps](https://qameta.io/).
-- **chai** *(4.3.8)*: Asserção de testes em formato de BDD / TDD.
-- **dotenv** *(16.3.1)*: Gerenciamento de variáveis de ambiente.
-- **faker-js/:faker** *(8.1.0)*: Geração de dados fake ("falsos" mas em padrões válidos).
-- **joi** *(17.10.2)*: Validação de schema de dados.
-- **mocha** *(10.2.0)*: Estrutura para escrita de testes (ex.: describe, it) e runner da automação.
-- **mongodb** *(5.9.0)*: Conexão e execução de operações em bancos não-relacionais MongoDB.
-- **mysql2** *(3.6.1)*: Conexão e execução de operações em bancos relacionais MySQL.
-- **supertest** *(6.3.3)*: Abstração de alto nível para realizar testes HTTP.
-- **eslint** *(8.49.0)*: Verificador de padrões de escrita da linguagem JavaScript.
-- **mochawesome** *(7.1.3)*: Formatador de código opinativo
-- **prettier** *(2.8.8)*: Gerador de relatórios para automações em estruturas Mocha.
+### Tecnologias
 
-## Diretórios
+- **allure-mocha**: Integração com ferramenta de gerenciamento de casos de testes [Allure TestOps](https://qameta.io/).
+- **chai**: Asserção de testes em formato de BDD / TDD.
+- **dotenv**: Gerenciamento de variáveis de ambiente.
+- **eslint**: Verificador de padrões de escrita da linguagem JavaScript.
+- **faker-js/:faker**: Geração de dados fake ("falsos" mas em padrões válidos).
+- **joi**: Validação de schema de dados.
+- **mocha**: Estrutura para escrita de testes (ex.: describe, it) e runner da automação.
+- **mochawesome**: Gerador de relatórios para automações em estruturas Mocha.
+- **mongodb**: Conexão e execução de operações em bancos não-relacionais MongoDB.
+- **mysql2**: Conexão e execução de operações em bancos relacionais MySQL.
+- **prettier**: Formatador de código opinativo
+- **supertest**: Abstração de alto nível para realizar testes HTTP.
+
+### Diretórios
 
 - 📂  **nome-serviço-api-test/**:
   - 📂 **core/:** Contém o centro da automação de testes de API, ou seja, as rotas que serão testadas e os testes em si.
@@ -71,6 +73,10 @@ npm i -g @frete.com/architecture-test-api
 
 ## Comandos
 
+
+>
+> 🗣️ Para uma maior detalhamento dos fluxos de execução de cada um dos comandos abaixo acesse o [diagrama](https://excalidraw.com/#json=0F2tXkUGNU_ZV97ZvYPiD,g-3nipxxUK3Arn-yNhPxyw)
+
 ### Criar projeto
 
 Para construir um novo projeto baseado na arquitetura proposta execute o seguinte comando no terminal e responda as perguntas para criar a arquitetura baseada nas necessidades do projeto.
@@ -79,12 +85,36 @@ Para construir um novo projeto baseado na arquitetura proposta execute o seguint
 architecture-test-api create
 ```
 
-### Migrar projeto
+### Adicionar estrutura de integração com banco de dados relacional (MySQL)
 
-Para migrar um projeto existente (padrão arquitetural antigo da frete.com) para a nova proposta de arquitetura de referência execute o seguinte comando:
+Para adicionar somente a estrutura de integração com um banco de dados relacional (MySQL) em um projeto existente. 
 
 ```bash
-architecture-test-api migrate
+architecture-test-api mysql
+```
+
+### Adicionar estrutura de integração com banco de dados não-relacional (MongoDB)
+
+Para adicionar somente a estrutura de integração com um banco de dados não-relacional (MongoDB) em um projeto existente. 
+
+```bash
+architecture-test-api mongodb
+```
+
+### Adicionar estrutura de integração com ferramenta de gerenciamento de casos de testes (Allure TestOps)
+
+Para adicionar somente a estrutura de integração com a ferramenta de gerenciamento de casos de testes (Allure TestOps) em um projeto existente. 
+
+```bash
+architecture-test-api allure-testops
+```
+
+### Adicionar estrutura de integração com ferramenta de comunicação (Slack)
+
+Para adicionar somente a estrutura de integração com a ferramenta de comunicação (Slack) em um projeto existente. 
+
+```bash
+architecture-test-api slack
 ```
 
 ## Changelog

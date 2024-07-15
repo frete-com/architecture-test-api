@@ -1,14 +1,20 @@
 import { MongoClient } from 'mongodb'
-import { env } from '../../env/config-environment.js'
 
-export async function createConnection(collection) {
-  const client = new MongoClient(env.URI_MONGO, { useNewUrlParser: true })
+export class MongoConnection {
+  constructor(uri, database) {
+    this.uri = uri
+    this.database = database
+  }
 
-  try {
-    await client.connect()
-    return client.db(env.DATABASE_MONGO)
-  } catch (error) {
-    console.error('Error connecting to MongoDB database', error)
-    process.exit(1)
+  async createConnection() {
+    const client = new MongoClient(this.uri, { useNewUrlParser: true })
+
+    try {
+      await client.connect()
+      return client.db(this.database)
+    } catch (error) {
+      error('Error connecting to MongoDB database', error)
+      process.exit(1)
+    }
   }
 }

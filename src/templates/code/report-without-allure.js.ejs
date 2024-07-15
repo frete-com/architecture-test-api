@@ -1,0 +1,15 @@
+import addContext from 'mochawesome/addContext.js'
+
+export async function report(context, response) {
+  const formatReport = (data) => JSON.stringify(data, undefined, 2)
+
+  addContext(
+    context,
+    `
+    Request: ${formatReport(response.request)} \n
+    Response Status Code: ${formatReport(response.status)} \n
+    Response Body: ${formatReport(response.body)} \n
+    Response Headers: ${formatReport(response.header)} \n
+    `,
+  )
+}

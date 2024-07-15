@@ -13,7 +13,7 @@ export function executeQuery(query) {
   try {
     connection.connect()
   } catch (error) {
-    console.error('Error connecting to MySQL database', error)
+    error('Erro ao conectar na base de dados MySQL', error)
   }
 
   return new Promise((resolve, reject) => {

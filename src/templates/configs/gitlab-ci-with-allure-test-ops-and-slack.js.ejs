@@ -1,19 +1,18 @@
-image: public.ecr.aws/m8n7w3l2/fretehub:node-18.12-alpine
+image: public.ecr.aws/m8n7w3l2/fretehub:node-20.9.0-alpine3.18
 
 variables:
-# Integração Allure TestOps
   ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
   ALLURE_LAUNCH_TAGS: "${CI_COMMIT_REF_NAME}, ${CI_PIPELINE_SOURCE}, supertest"
   ALLURE_TESTPLAN_PATH: "./testplan.json"
   ALLURE_RESULTS: "./allure-results"
-  TESTS_ENDPOINT: "$URL"
+  TESTS_ENDPOINT: ""
   TESTS_BRANCH: ${CI_COMMIT_REF_NAME}
-  ALLURE_ENDPOINT: "<%= props.url %>"
-  ALLURE_PROJECT_ID: <%= props.id %>
-  ALLURE_TOKEN: "<%= props.token %>"
-# Integração Slack
-  WEBHOOK: "<%= props.webhookSlack %>"
-  SLACK_CHANNEL: "<%= props.channelSlack %>"
+  ALLURE_ENDPOINT: "<%= props.urlAllureTestOps %>"
+  ALLURE_PROJECT_ID: <%= props.idProjectAllureTestOps %>
+  ALLURE_TOKEN: "<%= props.tokenAllureTestOps %>"
+
+  WEBHOOK: "<%= props.urlWebhookSlack %>"
+  SLACK_CHANNEL: "<%= props.channelNameSlack %>"
 
 stages:
 - lint
@@ -26,12 +25,11 @@ before_script:
   - wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_386 -O ./allurectl
   - chmod +x ./allurectl
 
-
 lint:
   allow_failure: false
   stage: lint
   script:
-    - npm run lint
+    - npm run lint-pipeline
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
       when: never
@@ -41,7 +39,7 @@ code-style:
   allow_failure: false
   stage: code-style
   script:
-    - npm run code-style
+    - npm run code-style-pipeline
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
       when: never

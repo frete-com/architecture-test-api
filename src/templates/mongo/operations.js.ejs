@@ -1,7 +1,5 @@
-import { createConnection } from './connection.js'
-
-export async function findOneDocument(collectionName, query = {}) {
-  const database = await createConnection()
+export async function findOneDocument(connection, collectionName, query = {}) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
@@ -9,52 +7,49 @@ export async function findOneDocument(collectionName, query = {}) {
 
     if (document) {
       return document
-    } else {
-      throw new Error('Nenhum documento encontrado com a consulta especificada.')
     }
+    throw new Error('Nenhum documento encontrado com a consulta especificada.')
   } catch (error) {
-    console.error('Erro ao realizar consulta no MongoDB: ', error)
+    error('Erro ao realizar consulta no MongoDB: ', error)
   } finally {
     database.client.close()
   }
 }
 
-export async function findDocuments(collectionName, query = {}) {
-  const database = await createConnection()
+export async function findDocuments(connection, collectionName, query = {}, sort = {}) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
-    const document = collection.find(query)
+    const documents = collection.find(query).sort(sort)
 
-    if (document) {
-      return document
-    } else {
-      throw new Error('Nenhum documento encontrado com a consulta especificada.')
+    if (documents) {
+      return await documents.toArray()
     }
+    throw new Error('Nenhum documento encontrado com a consulta especificada.')
   } finally {
     database.client.close()
   }
 }
 
-export async function findRandomicDocument(collectionName, size = 1) {
-  const database = await createConnection()
+export async function findRandomDocuments(connection, collectionName, size = 1) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
-    const document = collection.aggregate([{ $sample: { size } }])
+    const documents = collection.aggregate([{ $sample: { size } }])
 
-    if (document) {
-      return document
-    } else {
-      throw new Error('Nenhum documento encontrado com a consulta especificada.')
+    if (documents) {
+      return await documents.toArray()
     }
+    throw new Error('Nenhum documento encontrado com a consulta especificada.')
   } finally {
     database.client.close()
   }
 }
 
-export async function insertOneDocument(collectionName, document) {
-  const database = await createConnection()
+export async function insertOneDocument(connection, collectionName, document) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
@@ -65,20 +60,20 @@ export async function insertOneDocument(collectionName, document) {
   }
 }
 
-export async function updateOneDocument(collectionName, filter, update) {
-  const database = await createConnection()
+export async function updateOneDocument(connection, collectionName, filter, update) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
     const result = await collection.updateOne(filter, update)
-    console.log(`Document ${result.upsertedId} update`)
+    console.log(`Document ${result.upsertId} update`)
   } finally {
     database.client.close()
   }
 }
 
-export async function deleteOneDocument(collectionName, filter) {
-  const database = await createConnection()
+export async function deleteOneDocument(connection, collectionName, filter) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {
@@ -89,8 +84,8 @@ export async function deleteOneDocument(collectionName, filter) {
   }
 }
 
-export async function deleteManyDocuments(collectionName, filter) {
-  const database = await createConnection()
+export async function deleteManyDocuments(connection, collectionName, filter) {
+  const database = await connection.createConnection()
   const collection = database.collection(collectionName)
 
   try {

@@ -1,0 +1,40 @@
+image: public.ecr.aws/m8n7w3l2/fretehub:node-20.9.0-alpine3.18
+
+stages:
+- lint
+- code-style
+- test
+
+before_script:
+  - npm i
+
+lint:
+  allow_failure: false
+  stage: lint
+  script:
+    - npm run lint-pipeline
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+code-style:
+  allow_failure: false
+  stage: code-style
+  script:
+    - npm run code-style-pipeline
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+test:
+  timeout: 1h
+  allow_failure: false
+  stage: test
+  script:
+    - npm run test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success

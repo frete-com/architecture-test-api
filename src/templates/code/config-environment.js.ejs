@@ -1,26 +1,22 @@
-import Joi from 'joi'
+import joi from 'joi'
 import { config } from 'dotenv'
 
 config()
 
-const envSchema = Joi.object().keys({
-  BASE_URL: Joi.string(),
-  VERSION: Joi.string(),
-  ENVIRONMENT: Joi.string().valid('homolog', 'temp'),
+const envSchema = joi.object().keys({
+  /* 
+  Adicionar as variáveis declaradas no arquivo .env
 
-  HOST: Joi.string().allow(''),
-  PORT: Joi.string().allow(''),
-  USER: Joi.string().allow(''),
-  PASSWORD: Joi.string().allow(''),
+  Exemplo:
+    BASE_URL: Joi.string().required(),
 
-  URI: Joi.string().allow(''),
-  DATABASE_NAME: Joi.string().allow(''),
+  */
 })
 
 const { error, value } = envSchema.validate(process.env, { allowUnknown: true })
 
 if (error) {
-  throw new Error('Invalid environment variables!', error.message)
+  throw new Error('Variáveis de ambiente inválidas', error.message)
 }
 
 export const env = value

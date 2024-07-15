@@ -1,0 +1,60 @@
+image: public.ecr.aws/m8n7w3l2/fretehub:node-20.9.0-alpine3.18
+
+variables:
+# Integração Allure TestOps
+  ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
+  ALLURE_LAUNCH_TAGS: "${CI_COMMIT_REF_NAME}, ${CI_PIPELINE_SOURCE}, supertest"
+  ALLURE_TESTPLAN_PATH: "./testplan.json"
+  ALLURE_RESULTS: "./allure-results"
+  ALLURE_ENDPOINT: "<%= props.urlAllureTestOps %>"
+  ALLURE_PROJECT_ID: <%= props.idProjectAllureTestOps %>
+  ALLURE_TOKEN: "<%= props.tokenAllureTestOps %>"
+  TESTS_ENDPOINT: "$URL"
+  TESTS_BRANCH: ${CI_COMMIT_REF_NAME}
+
+stages:
+- lint
+- code-style
+- test
+
+before_script:
+  - npm i
+  - wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_386 -O ./allurectl
+  - chmod +x ./allurectl
+
+lint:
+  allow_failure: false
+  stage: lint
+  script:
+    - npm run lint-pipeline
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+code-style:
+  allow_failure: false
+  stage: code-style
+  script:
+    - npm run code-style-pipeline
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
+
+test:
+  timeout: 1h
+  allow_failure: false
+  stage: test
+  script:
+    - |
+      if [ $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH ]; then
+        ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+        ./allurectl watch -- npm run test-allure-testops --alluredir=${ALLURE_RESULTS} || false
+      else
+        npm run test
+      fi
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH'
+      when: never
+    - when: on_success
