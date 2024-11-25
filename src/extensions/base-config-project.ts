@@ -96,6 +96,29 @@ export default (toolbox: GluegunToolbox) => {
     }
   }
 
+  async function createTestFile() {
+    try {
+      await template.generate({
+        template: 'code/tests.test.js.ejs',
+        target: 'core/tests/tests.test.js',
+      })
+    } catch (e: any) {
+      warning(`🚨 Não foi possível criar o arquivo test.js | ${e}`)
+    }
+  }
+
+  async function createRouteFile() {
+    try {
+      await template.generate({
+        template: 'code/routes.js.ejs',
+        target: 'core/routes/route.js',
+      })
+    } catch (e: any) {
+      warning(`🚨 Não foi possível criar o arquivo route.js | ${e}`)
+    }
+  }
+  
+
   toolbox.configEnv = configEnv
   toolbox.configReport = configReport
   toolbox.configUtils = createUtils
@@ -103,4 +126,7 @@ export default (toolbox: GluegunToolbox) => {
   toolbox.createCommons = createCommons
   toolbox.createGitIgnore = createGitIgnore
   toolbox.createReadme = createReadme
+  toolbox.createTestFile = createTestFile
+  toolbox.createRouteFile = createRouteFile
+
 }

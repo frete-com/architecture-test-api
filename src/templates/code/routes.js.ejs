@@ -1,0 +1,13 @@
+import { env } from '../../support/env/config-environment.js'
+import supertest from 'supertest'
+import { report } from '../../support/helpers/report.js'
+const request = supertest(env.BASE_URL)
+
+export const getCompany = async ({ _this, token } = {}) => {
+  const response = await request
+    .get('/companies/search')
+    .set('Authorization', token)
+
+  report(_this, response)
+  return response
+}
