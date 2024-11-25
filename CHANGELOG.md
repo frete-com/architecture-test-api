@@ -4,6 +4,24 @@ Todas as alterações notáveis ​​neste projeto serão documentadas neste ar
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2024-11-25
+
+### Added
+
+- Habilitando a geração de arquivo de teste e route
+
+### Fixed
+
+- Ajustes no suporte do TS
+
+### Changed
+
+- Atualização do Readme
+
+## [2.0.0] - 2024-05-01
+
+- Ajustes gerais e lançamento da versão oficial
+
 ## [1.0.0] - 2024-07-15
 
 ### Added
