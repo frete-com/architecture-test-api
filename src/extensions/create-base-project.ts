@@ -14,6 +14,8 @@ export default (toolbox: GluegunToolbox) => {
     configReport,
     configUtils,
     createGitIgnore,
+    createTestFile,
+    createRouteFile,
     filesystem,
     print: { error, info, success },
     system
@@ -71,6 +73,8 @@ export default (toolbox: GluegunToolbox) => {
       await configReport()
       await configUtils()
       await createGitIgnore()
+      await createTestFile()
+      await createRouteFile()
       await createReadme(projectName)
 
       success('📄 Configuração base realizada!')
