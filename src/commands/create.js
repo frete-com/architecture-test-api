@@ -20,7 +20,7 @@ module.exports = {
     const askNameProject = {
       type: 'input',
       name: 'project',
-      message: 'Qual o nome do projeto a ser automatizado? (Ex: engine)',
+      message: 'Qual o nome do projeto a ser automatizado? (Ex: fretecom-freights)',
     }
 
     const askMySql = {
@@ -89,6 +89,6 @@ module.exports = {
     await createGitlabCI(url, id, token, webhook, channel, testops)
     await installDependecies()
 
-    success(`Projeto ${project} criado!`)
+    success(`Projeto ${project} criado!! Bora Codar 🚀🚀`)
   },
 }

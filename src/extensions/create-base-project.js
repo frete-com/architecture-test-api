@@ -13,6 +13,8 @@ module.exports = (toolbox) => {
     updatePackage,
     createReadme,
     configUtils,
+    configTestFile,
+    configRouteFile,
     print: { info },
   } = toolbox
 
@@ -39,6 +41,8 @@ module.exports = (toolbox) => {
     await configEnv()
     await configReport()
     await configUtils()
+    await configTestFile()
+    await configRouteFile()
     await configGitIgnore()
     await createTemplatesMrAndIssues()
     await createReadme()

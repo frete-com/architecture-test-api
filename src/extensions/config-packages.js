@@ -52,10 +52,27 @@ module.exports = (toolbox) => {
     })
   }
 
+  async function configTestFile() {
+      await template.generate({
+        template: 'code/tests.test.js.ejs',
+        target: 'core/tests/tests.test.js',
+      })
+  }
+
+  async function configRouteFile() {
+      await template.generate({
+        template: 'code/routes.js.ejs',
+        target: 'core/routes/route.js',
+      })
+  }
+
   toolbox.configEditorConfig = configEditorConfig
   toolbox.configUtils = configUtils
   toolbox.configESLint = configESLint
   toolbox.configMocha = configMocha
   toolbox.configPrettier = configPrettier
   toolbox.configReport = configReport
+  toolbox.configTestFile = configTestFile
+  toolbox.configRouteFile = configRouteFile
+
 }

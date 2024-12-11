@@ -1,0 +1,24 @@
+import { expect } from 'chai'
+
+import { env } from '../../support/env/config-environment.js'
+import { getCompany } from '../routes/route.js'
+
+describe('Company Suíte - Company Search', function () {
+  const _token = env.TOKEN
+
+  it('GET - Empresas de interesse - Validar retorno das empresas de interesse com sucesso', async function () {
+    const response = await getCompany({ _this: this, token: _token })
+
+    expect(response.status).to.eql(200)
+    expect(response.body).to.deep.eq({ data : 'xxxx' })
+
+  })
+
+  it('GET - Empresas de interesse - Validar retorno com token inválido', async function () {
+    const response = await getCompany({ _this: this, token: 'token_invalido' })
+
+    expect(response.status).to.eql(401)
+    expect(response.body).to.deep.eq({ data: 'xxxx' })
+
+  })
+})
