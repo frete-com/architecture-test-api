@@ -61,7 +61,7 @@ Proposta de estrutura arquitetural padronizada para desenvolvimento de projetos 
 
 ### Pré-requisitos
 
-- **Node**
+- **Node >=15** 
 - **NPM**
 
 ### Instalar
@@ -69,12 +69,6 @@ Proposta de estrutura arquitetural padronizada para desenvolvimento de projetos 
 ```bash
 npm i -g @frete.com/architecture-test-api
 ```
-
-## Comandos
-
-
->
-> 🗣️ Para uma maior detalhamento dos fluxos de execução de cada um dos comandos abaixo acesse o [diagrama](https://excalidraw.com/#json=0F2tXkUGNU_ZV97ZvYPiD,g-3nipxxUK3Arn-yNhPxyw)
 
 ### Criar um Novo Projeto
 
