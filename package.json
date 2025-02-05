@@ -1,6 +1,6 @@
 {
   "name": "@frete.com/architecture-test-api",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "CLI para construção de projetos de testes automatizados de API baseados em uma arquitetura de referência definida pelo de time de Qualidade da Frete.com",
   "repository": "https://github.com/frete-com/architecture-test-api",
   "keywords": [

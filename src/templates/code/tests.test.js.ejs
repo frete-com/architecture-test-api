@@ -2,9 +2,15 @@ import { expect } from 'chai'
 
 import { env } from '../../support/env/config-environment.js'
 import { getCompany } from '../routes/route.js'
+import { allureDetails } from '../support/helpers/report.js'
 
 describe('Company Suíte - Company Search', function () {
+
   const _token = env.TOKEN
+
+  beforeEach(async function () {
+    allureDetails({ story: 'Company Suíte - Company Searche', author: 'QA XYZ'})
+  })
 
   it('GET - Empresas de interesse - Validar retorno das empresas de interesse com sucesso', async function () {
     const response = await getCompany({ _this: this, token: _token })

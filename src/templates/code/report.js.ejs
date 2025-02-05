@@ -25,9 +25,11 @@ export async function report(context, response) {
   }
 }
 
-export async function allureDetails({ suite, author }) {
+export async function allureDetails({ epic = 'Contexto', feature = 'nome-minha-api-sem-test', story, author }) {
   if (mocha.reporters['allure-mocha']) {
-    allure.suite(suite)
+    allure.epic(epic)
+    allure.feature(feature)
+    allure.story(story)
     allure.label('Author', author)
   }
 }

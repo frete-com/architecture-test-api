@@ -4,6 +4,12 @@ Todas as alterações notáveis ​​neste projeto serão documentadas neste ar
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.4] - 2025-01-05
+
+### Added
+
+- Inserindo contexto de Epic, Feature e Story
+
 ## [2.1.2] - 2024-12-12
 
 ### Fixed
