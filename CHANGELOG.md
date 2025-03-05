@@ -4,6 +4,16 @@ Todas as alterações notáveis ​​neste projeto serão documentadas neste ar
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), e este projeto segue [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.5] - 2025-03-05
+
+- Upgrade allure-mocha from 2.8.1 to 2.15.1
+- Upgrade joi from 17.10.2 to 17.13.3
+- Upgrade mysql2 from 3.6.1 to 3.12.0
+- Upgrade @faker-js/faker from 8.1.0 to 8.4.1
+- Upgrade dotenv from 16.3.1 to 16.4.7
+- Upgrade chai from 4.3.8 to 5.1.2
+
+
 ## [2.1.4] - 2025-01-05
 
 ### Added
